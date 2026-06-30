@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ChatApp</title>
+<link rel="stylesheet" href="style.css" />
+
+<!-- Makes this installable as an app -->
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#075e54" />
+<link rel="icon" href="/icon-192.png" />
+<link rel="apple-touch-icon" href="/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="ChatApp" />
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-box">
+    <h1>💬 ChatApp</h1>
+    <p>Enter your name or phone number to start chatting.</p>
+    <input type="text" id="nameInput" placeholder="e.g. John or +1 555 123 4567" />
+    <button id="loginBtn" class="btn btn-primary">Start Chatting</button>
+    <p id="loginError" class="error-msg"></p>
+    <button id="installBtnLogin" class="install-btn-login" style="display:none;">⬇ Install App on This Device</button>
+    <p id="iosInstallHint" class="ios-hint" style="display:none;">On iPhone/iPad: tap the Share icon, then "Add to Home Screen".</p>
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="appScreen" class="app-screen" style="display:none;">
+
+  <!-- Sidebar: contact list -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <span id="myName" class="my-name"></span>
+      <div class="header-actions">
+        <button id="installBtn" class="install-btn" style="display:none;" title="Install App">⬇ Install App</button>
+        <button id="logoutBtn" class="logout-btn" title="Log out">⏏</button>
+      </div>
+    </div>
+    <div class="new-chat">
+      <input type="text" id="newChatInput" placeholder="Start a chat with name/number..." />
+      <button id="newChatBtn">+</button>
+    </div>
+    <div id="contactList" class="contact-list"></div>
+  </div>
+
+  <!-- Chat window -->
+  <div class="chat-window">
+    <div id="chatEmpty" class="chat-empty">
+      <p>Select a contact to start chatting</p>
+    </div>
+
+    <div id="chatActive" class="chat-active" style="display:none;">
+      <div class="chat-header">
+        <span id="chatWithName"></span>
+        <span id="chatStatus" class="chat-status"></span>
+        <div class="call-buttons">
+          <button id="voiceCallBtn" title="Voice call">📞</button>
+          <button id="videoCallBtn" title="Video call">🎥</button>
+        </div>
+      </div>
+      <div id="messageList" class="message-list"></div>
+      <div id="typingIndicator" class="typing-indicator"></div>
+      <div id="attachPreview" class="attach-preview" style="display:none;"></div>
+      <form id="messageForm" class="message-form">
+        <label for="fileInput" class="attach-btn" title="Send a photo or file">📎</label>
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.zip,.mp4,.mov" style="display:none;" />
+        <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off" />
+        <button type="submit" class="btn btn-primary">Send</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<!-- Incoming call popup -->
+<div id="incomingCallScreen" class="call-overlay" style="display:none;">
+  <div class="call-box">
+    <div class="call-avatar" id="incomingCallAvatar"></div>
+    <h2 id="incomingCallName"></h2>
+    <p id="incomingCallType"></p>
+    <div class="call-actions">
+      <button id="rejectCallBtn" class="call-btn call-btn-reject">✖</button>
+      <button id="acceptCallBtn" class="call-btn call-btn-accept">✔</button>
+    </div>
+  </div>
+</div>
+
+<!-- Active call screen -->
+<div id="activeCallScreen" class="call-overlay" style="display:none;">
+  <div class="active-call-box">
+    <video id="remoteVideo" autoplay playsinline></video>
+    <video id="localVideo" autoplay playsinline muted></video>
+    <div class="call-status" id="callStatusText">Calling...</div>
+    <div class="call-actions">
+      <button id="hangupBtn" class="call-btn call-btn-reject">✖ End Call</button>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
