@@ -1,0 +1,4 @@
+node_modules/
+db/chat.json
+uploads/*
+!uploads/.gitkeep
